@@ -1,2 +1,0 @@
-import mobx from 'mobx';
-

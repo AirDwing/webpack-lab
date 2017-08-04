@@ -1,86 +1,21 @@
-# webpack-lab
+# React/Antd 项目初始化
 
-Webpack各项打包性能测试
+## 1. 配置 eslint
 
-## 初始压缩大小
+- 创建: `.eslintrc` 和 `.eslintignore`
+- 安装: `yarn add --dev eslint eslint-config-dwing eslint-config-airbnb eslint-plugin-react eslint-plugin-jsx-a11y babel-eslint`
 
-- `react` 47.1 kB
-- `react-dom` 230 kB
-- `mobx` 55.7 kB
-- 以上三个(`mixed3`) 284 kB 
+## 2. 配置 babel
 
-## 优化步骤
+- 创建: `.babelrc`
+- 安装: `yarn add --dev babel-preset-env babel-preset-react babel-plugin-transform-runtime babel-plugin-transform-decorators-legacy babel-plugin-import babel-plugin-transform-class-properties babel-plugin-transform-object-rest-spread babel-runtime babel-polyfill babel-core`
 
-### 以 mixed3 为例
+## 3. 安装 react/antd 等
 
-1. 产品环境打包
+- 安装: `yarn add react react-dom react-router antd mobx`
+- webpack相关: `yarn add --dev babel-loader less less-loader css-loader postcss-loader autoprefixer`
 
-```js
-new webpack.DefinePlugin({
-  'process.env': {
-    NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-  }
-})
-```
+## 4. 配置 webpack
 
-```bash
-NODE_ENV=production webpack  --progress
-```
-
-缩小到 205 kB
-
-2. 通用库抽离, 如 `react`, `jquery`, `echarts` 等
-
-```js
-// 示例
-{
-  entry: {
-    bundle: 'app'
-    vendor: ['react']
-  }
-
-  plugins: {
-    new webpack.optimize.CommonsChunkPlugin('vendor',  'vendor.js')
-  }
-}
-```
-
-文件大小:
-
-- `app.js` 156 字节
-- `common.js` 206 kB
-- `vendor.js` 75字节
-
-## 其他优化
-
-### 分离css
-
-插件: `extract-text-webpack-plugin`
-
-```js
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-...
-
-    loaders:[
-      {
-          test: /\.css$/,
-          loader: ExtractTextPlugin.extract("style-loader", "css-loader")
-      },
-      {
-          test: /\.less$/,
-          loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
-      },
-
-      ...
-
-...
-
-plugins: [
-    ...
-
-    new ExtractTextPlugin("bundle.css")
-]
-```
-
-## [Antd](antd/README.md)
+- 创建: `webpack.config.js` (用作产品) `webpack.config.dev.js` (用作开发)
+- 安装: `yarn add --dev webpack html-webpack-plugin extract-text-webpack-plugin`

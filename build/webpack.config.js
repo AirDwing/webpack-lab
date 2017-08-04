@@ -3,18 +3,15 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const theme = require('./theme');
-const rucksack = require('rucksack-css');
-const autoprefixer = require('autoprefixer');
+const theme = require('./antd.config');
 
 module.exports = {
   entry: {
-    app: path.resolve(__dirname, 'src/index.js'),
-    vendor: ['react', 'react-dom', 'mobx'],
-    others: ['moment']
+    app: path.resolve(__dirname, '../src/main.jsx'),
+    vendor: ['react', 'react-dom', 'react-router', 'mobx']
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',
     publicPath: '/'
   },
@@ -26,23 +23,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract(
-          `${require.resolve('css-loader')}?sourceMap&-autoprefixer`
-        )
-      },
-      {
-        test(filePath) {
-          return /\.less$/.test(filePath) && !/\.module\.less$/.test(filePath);
-        },
-        loader: ExtractTextPlugin.extract(
-          `${require.resolve('css-loader')}?sourceMap&-autoprefixer!` +
-          `${require.resolve('postcss-loader')}!` +
-          `${require.resolve('less-loader')}?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
-        )
-      },
-      {
-        test: /\.module\.less$/,
+        test: /\.less$/,
         loader: ExtractTextPlugin.extract(
           `${require.resolve('css-loader')}?sourceMap&-autoprefixer!` +
           `${require.resolve('less-loader')}?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
@@ -53,21 +34,11 @@ module.exports = {
   resolve: {
     modules: [
       'node_modules',
-      path.resolve(__dirname, 'src')
+      path.resolve(__dirname, '../src')
     ],
     extensions: ['.js', '.json', '.jsx', '.css']
   },
   plugins: [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        postcss: [
-          rucksack(),
-          autoprefixer({
-            browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4']
-          })
-        ]
-      }
-    }),
     new ExtractTextPlugin('[name].css', {
       disable: false,
       allChunks: true
@@ -102,7 +73,7 @@ module.exports = {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/index.html')
+      template: path.resolve(__dirname, '../src/index.html')
     })
   ]
 };

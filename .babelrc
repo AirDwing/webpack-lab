@@ -13,6 +13,10 @@
       "polyfill": false,
       "regenerator": true,
       "moduleName": "babel-runtime"
-    }]
+    }],
+    "transform-decorators-legacy",
+    ["import", { "libraryName": "antd", "style": true }],
+    "transform-class-properties",
+    "transform-object-rest-spread"
   ]
 }

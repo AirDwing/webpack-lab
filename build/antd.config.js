@@ -1,4 +1,4 @@
-module.exports = () => ({
+module.exports = {
   // 时间背景框
   'input-bg': '#323232',
   'input-border': '#666666',
@@ -16,4 +16,4 @@ module.exports = () => ({
   'item-hover-bg ': '#0066ff',
   'table-row-hover-bg ': '#0066ff'
 
-});
+};
