@@ -39,10 +39,6 @@ module.exports = {
     extensions: ['.js', '.json', '.jsx', '.css']
   },
   plugins: [
-    new ExtractTextPlugin('[name].css', {
-      disable: false,
-      allChunks: true
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
@@ -68,7 +64,7 @@ module.exports = {
         drop_console: false
       }
     }),
-    new ExtractTextPlugin('style.css', {
+    new ExtractTextPlugin('[name].css', {
       disable: false,
       allChunks: true
     }),
