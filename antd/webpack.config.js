@@ -22,15 +22,13 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract(
-          `${require.resolve('css-loader')}?sourceMap&-autoprefixer!` +
-          `${require.resolve('postcss-loader')}`
+          `${require.resolve('css-loader')}?sourceMap&-autoprefixer`
         )
       },
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract(
           `${require.resolve('css-loader')}?sourceMap&-autoprefixer!` +
-          `${require.resolve('postcss-loader')}!` +
           `${require.resolve('less-loader')}?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
         )
       }
@@ -47,6 +45,10 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
       filename: 'common.js'
+    }),
+    new ExtractTextPlugin('[name].css', {
+      disable: false,
+      allChunks: true
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
